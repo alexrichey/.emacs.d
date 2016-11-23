@@ -213,7 +213,8 @@
 					; Apex                    
 (add-to-list 'auto-mode-alist '("\\.trigger\\'" . java-mode))
 (add-to-list 'auto-mode-alist '("\\.cls\\'" . java-mode))
-
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 4)))
 
 					; Clojure
 
