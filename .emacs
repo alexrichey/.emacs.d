@@ -160,6 +160,7 @@
 (global-set-key		(kbd "C-x C-f")	'helm-find-files)
 (global-set-key		(kbd "M-y")	'helm-show-kill-ring)
 (global-set-key		(kbd "M-x")	'helm-M-x)
+(global-set-key		(kbd "C-c SPC")	'ace-jump-word-mode)
 
 ;; multiple cursors
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -170,8 +171,6 @@
 
 ;;Chord Definitions
 (key-chord-mode 1)
-(key-chord-define-global "jk" 'ace-jump-mode)
-(key-chord-define-global "jl" 'ace-jump-line-mode)
 (key-chord-define-global "df" 'other-window)
 (key-chord-define-global "jd" 'helm-buffers-list)
 (key-chord-define-global ",," 'evil-mode)
@@ -210,13 +209,15 @@
 (setq projectile-enable-caching t)
 (helm-projectile-on)
 
-					; Apex                    
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
+                                        ; Apex
 (add-to-list 'auto-mode-alist '("\\.trigger\\'" . java-mode))
 (add-to-list 'auto-mode-alist '("\\.cls\\'" . java-mode))
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 4)))
 
-					; Clojure
+                                        ; Clojure
 
 (defun clojure-mode-hooks ()
   (progn
@@ -260,16 +261,16 @@
 (add-to-list 'auto-mode-alist '("\\.ejs\\'" . html-mode))
 (add-hook 'html-mode-hook 'html-mode-hooks)
 
-					; js-comint 
+                                        ; js-comint
 ;; (setq inferior-js-program-command "/usr/bin/java org.mozilla.javascript.tools.shell.Main")
-;; (add-hook 'js2-mode-hook '(lambda () 
-;; 			    (local-set-key "\C-x\C-e" 'js-send-last-sexp)
-;; 			    (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
-;; 			    (local-set-key "\C-cb" 'js-send-buffer)
-;; 			    (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
-;; 			    (local-set-key "\C-cl" 'js-load-file-and-go)
-;; 			    (lambda ()
-;; 			      (slime-js-minor-mode 1))))
+;; (add-hook 'js2-mode-hook '(lambda ()
+;;                          (local-set-key "\C-x\C-e" 'js-send-last-sexp)
+;;                          (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
+;;                          (local-set-key "\C-cb" 'js-send-buffer)
+;;                          (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
+;;                          (local-set-key "\C-cl" 'js-load-file-and-go)
+;;                          (lambda ()
+;;                            (slime-js-minor-mode 1))))
 
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
 ;; (require 'slime)
@@ -334,15 +335,18 @@
 
 ;; Python Jedi Hook
 ;; (add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)   
+(setq jedi:complete-on-dot t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" default)))
  '(package-selected-packages
    (quote
-    (highlight-symbol pretty-mode-plus pretty-mode python-pep8 pony-mode angular-snippets angular-mode yafolding web-mode use-package tagedit slime skewer-mode scala-mode salesforce-utils requirejs pretty-lambdada password-vault olivetti neotree markdown-mode magit key-chord json-mode js2-refactor js2-highlight-vars js-comint jedi http helm-projectile go-mode expand-region exec-path-from-shell evil emmet-mode eclim company clojurescript-mode cljr-helm clj-mode auto-indent-mode ace-jump-mode ac-cider))))
+    (helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
