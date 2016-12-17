@@ -1,10 +1,12 @@
 (package-initialize)
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("marmalade" . "https://marmalade-repo.org/packages/")
-			 ("melpa" . "https://melpa.org/packages/")))
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
 (require 'use-package)
 (use-package package
+  :ensure t)
+(use-package flyspell-correct-helm
   :ensure t)
 (use-package cc-mode
   :ensure t)
@@ -38,7 +40,7 @@
   :ensure t)
 (use-package jedi
   :ensure t)
-(use-package js2-mode 
+(use-package js2-mode
   :ensure t)
 (use-package company
   :ensure t)
@@ -65,21 +67,21 @@
 
 (use-package js2-refactor
   :ensure t)
-(use-package json-mode 
+(use-package json-mode
   :ensure t)
 (use-package eclim
   :ensure t)
-(use-package neotree 
+(use-package neotree
   :ensure t)
-(use-package json-mode 
+(use-package json-mode
   :ensure t)
 (use-package olivetti
   :ensure t)
-(use-package paredit 
+(use-package paredit
   :ensure t)
 
 ;;Trying this out
-(use-package password-vault 
+(use-package password-vault
   :ensure t)
 
 (use-package pretty-lambdada
@@ -90,8 +92,8 @@
   :ensure t)
 (use-package scala-mode
   :ensure t)
-(use-package slime
-  :ensure t)
+;; (use-package slime
+;;   :ensure t)
 (use-package skewer-mode
   :ensure t)
 (use-package auto-indent-mode
@@ -104,7 +106,7 @@
   :ensure t)
 (use-package angular-snippets
   :ensure t)
-(use-package angular-mode 
+(use-package angular-mode
   :ensure t)
 (use-package pony-mode
   :ensure t)
@@ -114,7 +116,6 @@
   :ensure t)
 (use-package highlight-symbol
   :ensure t)
-
 
 ;; basic config
 (setq-default indent-tabs-mode nil)
@@ -140,7 +141,7 @@
 
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)
-					;keys
+                                        ;keys
 ;; basic
 (global-set-key		(kbd "<C-tab>")		'other-window)
 (global-set-key		(kbd "C-x C-p")		'other-window-backwards)
@@ -184,12 +185,12 @@
   t)
 
 
-					;Appearance
+                                        ;Appearance
 (setq default-directory "~/Dev/")
 ;;(neotree-dir "~/Dev")
 
 
-					; Helm
+                                        ; Helm
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
@@ -238,7 +239,7 @@
 (add-hook 'clojure-mode-hook 'clojure-mode-hooks)
 (put 'upcase-region 'disabled nil)
 
-					; HTML
+                                        ; HTML
 
 (eval-after-load "sgml-mode"
   '(progn
@@ -280,7 +281,7 @@
 
 (defun my-js2-mode-hooks ()
   (progn
-    (setq js-indent-level 2)
+    (setq js-indent-level 4)
     (auto-indent-mode 1)
     (toggle-truncate-lines 1)
     (show-paren-mode 1)
@@ -346,10 +347,12 @@
     ("9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" default)))
  '(package-selected-packages
    (quote
-    (helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
+    (flyspell-correct-helm helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(load-file "./site-lisp/force-mode/force-mode.el")
