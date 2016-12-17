@@ -4,9 +4,15 @@
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (require 'use-package)
+(use-package markdown-mode
+  :ensure t)
+(use-package evil
+  :ensure t)
 (use-package package
   :ensure t)
 (use-package flyspell-correct-helm
+  :ensure t)
+(use-package magit
   :ensure t)
 (use-package cc-mode
   :ensure t)
@@ -116,6 +122,8 @@
   :ensure t)
 (use-package highlight-symbol
   :ensure t)
+(use-package undo-tree
+  :ensure t)
 
 ;; basic config
 (setq-default indent-tabs-mode nil)
@@ -210,7 +218,7 @@
 (setq projectile-enable-caching t)
 (helm-projectile-on)
 
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;; (add-hook 'before-save-hook 'whitespace-cleanup)
 
                                         ; Apex
 (add-to-list 'auto-mode-alist '("\\.trigger\\'" . java-mode))
@@ -334,9 +342,31 @@
 (key-chord-define-global ";;" 'insert-semicolon-at-end)
 
 
-;; Python Jedi Hook
-;; (add-hook 'python-mode-hook 'jedi:setup)
+;; Experimental Python
+(package-initialize)
+(pyde-enable)
+(setq python-check-command "pyflakes")
+(use-package pyde
+  :ensure t)
+(use-package flymake
+  :ensure t)
+(use-package pyflakes
+  :ensure t)
+(use-package highlight-indentation
+  :ensure t)
+
+;; Python Hooks
+(add-hook 'python-mode-hook
+          (lambda ()
+            (progn
+              ;; (jedi-mode 1)
+              (print "Python, huh? Cool, dude."))))
+
 (setq jedi:complete-on-dot t)
+
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -347,7 +377,7 @@
     ("9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" default)))
  '(package-selected-packages
    (quote
-    (flyspell-correct-helm helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
+    (elpy pyfslakes pyflakes highlight-indentation pyde helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
