@@ -5,6 +5,11 @@
   (interactive)
   (shell-command "force login"))
 
+(defun force-cli-fetch-classes ()
+  "fetches classes"
+  (interactive)
+  (force-cli-command "fetch -t ApexClass"))
+
 (defun force-cli-fetch-aura ()
   "fetches aura"
   (interactive)
@@ -52,12 +57,14 @@
 (progn
   (setq force-cli-keymap (make-sparse-keymap))
   (define-key force-cli-keymap (kbd "C-c f p") 'force-cli-push-aura-file)
-  (define-key force-cli-keymap (kbd "C-c f l") 'force-cli-login)
-  )
+  (define-key force-cli-keymap (kbd "C-c f l") 'force-cli-login))
 
 ;; Add mode hooks
 (add-to-list 'auto-mode-alist '("\\.app\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.app\\'" . force-mode))
+
 (add-to-list 'auto-mode-alist '("\\.cmp\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.cmp\\'" . force-mode))
 
 (define-minor-mode force-mode
   "A minor mode for interacting with the Force CLI, and other goodies."
@@ -86,14 +93,3 @@
                   (setq objects (plist-get data :objects))
                   (force-cli-complete-objects (force-cli--parse-objectnames-from-response (plist-get data :objects)))
                   (force-cli-complete-objects (plist-get data :objects)))))))
-
-
-
-
-(defun fun (args)
-  "docstring"
-  (interactive "sWhat up?")
-  (print (string args " and some more")))
-
-
-(string "this " "that")

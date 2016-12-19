@@ -289,7 +289,7 @@
 
 (defun my-js2-mode-hooks ()
   (progn
-    (setq js-indent-level 4)
+    (setq js-indent-level 2)
     (auto-indent-mode 1)
     (toggle-truncate-lines 1)
     (show-paren-mode 1)
@@ -385,4 +385,4 @@
  ;; If there is more than one, they won't work right.
  )
 
-(load-file "./site-lisp/force-mode/force-mode.el")
+(load-file "~/.emacs.d/site-lisp/force-mode/force-mode.el")
