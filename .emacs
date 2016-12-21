@@ -442,7 +442,8 @@
 
                                         ; Bookmarking
 (global-set-key (kbd "C-c b b") 'bm-toggle)
-(key-chord-define-global "qe" 'bm-next)
+(global-set-key (kbd "C-c b a") 'bm-show-all)
+;; (key-chord-define-global "qe" 'bm-next)
 (key-chord-define-global "qw" 'bm-previous)
 
 ;; Make the color not SO jarring...
