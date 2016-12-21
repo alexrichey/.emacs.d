@@ -4,8 +4,59 @@
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (require 'use-package)
-(use-package markdown-mode
+(use-package bm
   :ensure t)
+(use-package markdown-mode
+  :init
+  ;; restore on load (even before you require bm)
+  (setq bm-restore-repository-on-load t)
+
+  :config
+  ;; Allow cross-buffer 'next'
+  (setq bm-cycle-all-buffers t)
+
+  ;; where to store persistant files
+  (setq bm-repository-file "~/.emacs.d/bm-repository")
+
+  ;; save bookmarks
+  (setq-default bm-buffer-persistence t)
+
+  ;; Loading the repository from file when on start up.
+  (add-hook' after-init-hook 'bm-repository-load)
+
+  ;; Restoring bookmarks when on file find.
+  (add-hook 'find-file-hooks 'bm-buffer-restore)
+
+  ;; Saving bookmarks
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
+
+  ;; Saving the repository to file when on exit.
+  ;; kill-buffer-hook is not called when Emacs is killed, so we
+  ;; must save all bookmarks first.
+  (add-hook 'kill-emacs-hook #'(lambda nil
+                                 (bm-buffer-save-all)
+                                 (bm-repository-save)))
+
+  ;; The `after-save-hook' is not necessary to use to achieve persistence,
+  ;; but it makes the bookmark data in repository more in sync with the file
+  ;; state.
+  (add-hook 'after-save-hook #'bm-buffer-save)
+
+  ;; Restoring bookmarks
+  (add-hook 'find-file-hooks   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore)
+
+  ;; The `after-revert-hook' is not necessary to use to achieve persistence,
+  ;; but it makes the bookmark data in repository more in sync with the file
+  ;; state. This hook might cause trouble when using packages
+  ;; that automatically reverts the buffer (like vc after a check-in).
+  ;; This can easily be avoided if the package provides a hook that is
+  ;; called before the buffer is reverted (like `vc-before-checkin-hook').
+  ;; Then new bookmarks can be saved before the buffer is reverted.
+  ;; Make sure bookmarks is saved before check-in (and revert-buffer)
+  (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
+  (setq bm-cycle-all-buffers t))
+
 (use-package evil
   :ensure t)
 (use-package package
@@ -126,6 +177,7 @@
   :ensure t)
 
 ;; basic config
+(linum-mode 1)
 (setq-default indent-tabs-mode nil)
 (scroll-bar-mode 0)
 (setq ring-bell-function 'ignore)
@@ -377,12 +429,31 @@
     ("9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" default)))
  '(package-selected-packages
    (quote
-    (elpy pyfslakes pyflakes highlight-indentation pyde helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
+    (bm flyspell-correct-helm elpy pyfslakes pyflakes highlight-indentation pyde helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(bm-persistent-face ((t (:background "selectedKnobColor" :foreground "White")))))
 
+                                        ; The force is with you
 (load-file "~/.emacs.d/site-lisp/force-mode/force-mode.el")
+
+                                        ; Bookmarking
+(global-set-key (kbd "C-c b b") 'bm-toggle)
+(key-chord-define-global "qe" 'bm-next)
+(key-chord-define-global "qw" 'bm-previous)
+
+;; Make the color not SO jarring...
+(defface bm-persistent-face
+  '((((class grayscale)
+      (background light)) (:background "DimGray"))
+    (((class grayscale)
+      (background dark))  (:background "LightGray"))
+    (((class color)
+      (background light)) (:foreground "White" :background "selectedKnobColor"))
+    (((class color)
+      (background dark))  (:foreground "White" :background "selectedKnobColor")))
+  "Face used to highlight current line if bookmark is persistent."
+  :group 'bm)

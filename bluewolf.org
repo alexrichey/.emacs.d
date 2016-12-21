@@ -1,0 +1,24 @@
+* 2016-12-21 - Wednesday
+** TODO fix up release for SSB
+** TODO test big files for upload story
+** TODO test success email.
+** DONE ticket for SSB isAttachable logic
+** TODO Siegels SSB Issue
+*** investigate
+**** Log in SF Instance for failed job?
+***** There won't be a job
+***** there will be a login record
+****** Saurabh Kulkarni (0030P00001w3Se2)
+****** Transferring B
+** Item-03539
+CLOCK: [2016-12-21 Wed 13:46]
+*** tested with 20 MB xls file. Works fine - takes about 1 min to load though.
+*** TODO Move File upload stuff under Backlog Items tab (currently under Home)
+*** TODO Component should increment step on file upload complete.
+*** TODO Remove blue hover styling from previous/next buttonsc
+*** TODO fix header css (make flush with x button)
+*** Error Handling
+**** TODO invalid file format error
+**** TODO error on file upload
+
+
