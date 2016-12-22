@@ -177,6 +177,7 @@
   :ensure t)
 
 ;; basic config
+(setq neo-window-fixed-size nil)
 (linum-mode 1)
 (setq-default indent-tabs-mode nil)
 (scroll-bar-mode 0)
@@ -435,7 +436,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bm-persistent-face ((t (:background "selectedKnobColor" :foreground "White")))))
+ )
 
                                         ; The force is with you
 (load-file "~/.emacs.d/site-lisp/force-mode/force-mode.el")
