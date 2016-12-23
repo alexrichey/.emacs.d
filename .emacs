@@ -177,6 +177,7 @@
   :ensure t)
 
 ;; basic config
+(setq neo-window-width 45)
 (setq neo-window-fixed-size nil)
 (linum-mode 1)
 (setq-default indent-tabs-mode nil)
@@ -271,13 +272,8 @@
 (setq projectile-enable-caching t)
 (helm-projectile-on)
 
-;; (add-hook 'before-save-hook 'whitespace-cleanup)
+(add-hook 'before-save-hook 'whitespace-cleanup)
 
-                                        ; Apex
-(add-to-list 'auto-mode-alist '("\\.trigger\\'" . java-mode))
-(add-to-list 'auto-mode-alist '("\\.cls\\'" . java-mode))
-(add-hook 'java-mode-hook (lambda ()
-                            (setq c-basic-offset 4)))
 
                                         ; Clojure
 
@@ -395,27 +391,27 @@
 (key-chord-define-global ";;" 'insert-semicolon-at-end)
 
 
-;; Experimental Python
-(package-initialize)
-(pyde-enable)
-(setq python-check-command "pyflakes")
-(use-package pyde
-  :ensure t)
-(use-package flymake
-  :ensure t)
-(use-package pyflakes
-  :ensure t)
-(use-package highlight-indentation
-  :ensure t)
+                                        ; Experimental Python
+;; (package-initialize)
+;; (pyde-enable)
+;; (setq python-check-command "pyflakes")
+;; (use-package pyde
+;;   :ensure t)
+;; (use-package flymake
+;;   :ensure t)
+;; (use-package pyflakes
+;;   :ensure t)
+;; (use-package highlight-indentation
+;;   :ensure t)
 
-;; Python Hooks
-(add-hook 'python-mode-hook
-          (lambda ()
-            (progn
-              ;; (jedi-mode 1)
-              (print "Python, huh? Cool, dude."))))
+;; ;; Python Hooks
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;             (progn
+;;               ;; (jedi-mode 1)
+;;               (print "Python, huh? Cool, dude."))))
 
-(setq jedi:complete-on-dot t)
+;; (setq jedi:complete-on-dot t)
 
 
 
@@ -428,6 +424,7 @@
  '(custom-safe-themes
    (quote
     ("9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" default)))
+ '(neo-window-width 40)
  '(package-selected-packages
    (quote
     (bm flyspell-correct-helm elpy pyfslakes pyflakes highlight-indentation pyde helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
@@ -438,8 +435,16 @@
  ;; If there is more than one, they won't work right.
  )
 
+                                        ; Apex
+(add-to-list 'auto-mode-alist '("\\.trigger\\'" . java-mode))
+(add-to-list 'auto-mode-alist '("\\.cls\\'" . java-mode))
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 4)))
+
                                         ; The force is with you
 (load-file "~/.emacs.d/site-lisp/force-mode/force-mode.el")
+(add-to-list 'auto-mode-alist '("\\.cmp\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.app\\'" . html-mode))
 
                                         ; Bookmarking
 (global-set-key (kbd "C-c b b") 'bm-toggle)
