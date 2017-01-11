@@ -32,6 +32,13 @@
   (interactive)
   (shell-command "force logins"))
 
+(defun force-cli-apex-class ()
+  (interactive)
+  (progn
+    (print "Pushing Apex Class")
+    (let ((path (current-file-path)))
+      (force-cli-command (concat "force push -t ApexClass -f " path)))))
+
 (defun force-cli-push-aura-file ()
   (interactive)
   (progn
@@ -57,6 +64,7 @@
 (progn
   (setq force-cli-keymap (make-sparse-keymap))
   (define-key force-cli-keymap (kbd "C-c f p") 'force-cli-push-aura-file)
+  (define-key force-cli-keymap (kbd "C-c f c") 'force-cli-push-apex-class)
   (define-key force-cli-keymap (kbd "C-c f l") 'force-cli-login))
 
 ;; Add mode hooks
