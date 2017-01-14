@@ -4,6 +4,8 @@
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (require 'use-package)
+(use-package s
+  :ensure t)
 (use-package f
   :ensure t)
 (use-package bm
@@ -336,6 +338,8 @@
 ;;                            (slime-js-minor-mode 1))))
 
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
+(global-set-key (kbd "C-M-i") 'complete-symbol)
+
 ;; (require 'slime)
 
 ;; make js2 the default mode for js
