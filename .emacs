@@ -4,6 +4,8 @@
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (require 'use-package)
+(use-package f
+  :ensure t)
 (use-package bm
   :ensure t)
 (use-package markdown-mode
@@ -237,7 +239,6 @@
 (key-chord-define-global "jd" 'helm-buffers-list)
 (key-chord-define-global ",," 'evil-mode)
 (key-chord-define-global "jk" 'evil-force-normal-state)
-(key-chord-define-global "qw" 'ace-jump-char-mode)
 
 (autoload
   'ace-jump-mode

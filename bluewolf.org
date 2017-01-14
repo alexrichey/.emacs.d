@@ -1,3 +1,19 @@
+* 2016-12-20 - Tuesday
+** Smoketesting
+*** Item-03445 - Updates to Success Email for Vertical 2.0
+*** Item-03531 - Un-documented profile is not showing in profile section of manifest
+CLOCK: [2016-12-20 Tue 12:04]--[2016-12-20 Tue 12:11] =>  0:07
+CLOCK: [2016-12-20 Tue 11:36]--[2016-12-20 Tue 11:41] =>  0:05
+** Development
+*** Item-03539 - Source file for bulk import
+CLOCK: [2016-12-20 Tue 22:19]--[2016-12-21 Wed 00:26] =>  2:07
+CLOCK: [2016-12-20 Tue 1:50]--[2016-12-20 Tue 11:56] =>  0:06
+**** NOTES:
+***** Dialogue:
+****** DomFileInput: FileList
+***** Drop:
+****** Event: FileList
+
 * 2016-12-21 - Wednesday
 ** TODO fix up release for SSB
 ** TODO test big files for upload story
@@ -20,5 +36,5 @@ CLOCK: [2016-12-21 Wed 13:46]
 *** Error Handling
 **** TODO invalid file format error
 **** TODO error on file upload
-
-
+* 2016-12-22 - Thursday
+** 

@@ -1,6 +1,25 @@
 (defun force-cli-command (command)
   (shell-command (concat "force " command)))
 
+(defun force-cli-current-dir ()
+  (let* ((current-file (current-file-path))
+         (current-dir (f-dirname current-file)))
+    (print current-dir)))
+
+(defun force-cli--file-is-controller? (file)
+  (s-suffix? "controller.js" file))
+
+(defun force-cli--file-is-helper? (file)
+  (s-suffix? "helper.js" file))
+
+(defun force-cli-find-controller ()
+  "docstring"
+  (interactive)
+  (let* ((dir (force-cli-current-dir))
+         (files (f-files dir))
+         (isController (map #s-suffix? files))))
+  (print files))
+
 (defun force-cli-login ()
   (interactive)
   (shell-command "force login"))
@@ -48,10 +67,10 @@
 
 (defun force-cli-complete-objects (data)
   (interactive)
-  (print (helm :sources (helm-build-sync-source "test"
-                    :candidates data
-                    :fuzzy-match t)
-         :buffer "*helm test*")))
+  (print (helm :sources (helm-build-sync-source "objects"
+                          :candidates data
+                          :fuzzy-match t)
+               :buffer "* Force cli completions *")))
 
 (defvar force-cli-keymap nil "Keymap for Force-cli mode")
 (progn
@@ -76,10 +95,10 @@
 (defun force-cli--parse-objectnames-from-response (response)
   (mapcar (lambda (x) (print (plist-get x :Name))) response))
 
-(defun force-cli-get-objects ()
+(defun force-cli-get-ui ()
   (interactive)
   (request
-   "localhost:8080/objects"
+   "localhost:8080/complete/me"
 
    :parser
    (lambda ()
@@ -89,7 +108,6 @@
    :success
    (function* (lambda (&key data &allow-other-keys)
                 (progn
-                  (print (plist-get data :objects))
-                  (setq objects (plist-get data :objects))
-                  (force-cli-complete-objects (force-cli--parse-objectnames-from-response (plist-get data :objects)))
-                  (force-cli-complete-objects (plist-get data :objects)))))))
+                  (setq ui (append data '()))
+                  (insert (force-cli-complete-objects ui)))))))
+
