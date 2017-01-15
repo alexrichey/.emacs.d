@@ -471,3 +471,14 @@
       (background dark))  (:foreground "White" :background "selectedKnobColor")))
   "Face used to highlight current line if bookmark is persistent."
   :group 'bm)
+
+
+
+
+                                        ; Org Mode
+(setq org-tag-alist '(
+                      (:startgroup . nil)
+                      ("@SSB" . ?s) ("Sightline" . ?l)
+                      (:endgroup . nil)
+                      ("Support" . ?a)
+                      ))
