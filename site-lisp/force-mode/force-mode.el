@@ -12,13 +12,13 @@
 (defun force-cli--file-is-helper? (file)
   (s-suffix? "helper.js" file))
 
-(defun force-cli-find-controller ()
-  "docstring"
-  (interactive)
-  (let* ((dir (force-cli-current-dir))
-         (files (f-files dir))
-         (isController (map #s-suffix? files))))
-  (print files))
+;; (defun force-cli-find-controller ()
+;;   "docstring"
+;;   (interactive)
+;;   (let* ((dir (force-cli-current-dir))
+;;          (files (f-files dir))
+;;          (isController (map #s-suffix? files))))
+;;   (print files))
 
 (defun force-cli-login ()
   (interactive)
@@ -65,12 +65,63 @@
     (let ((path (current-file-path)))
       (force-cli-command (concat "push -t ApexClass " path)))))
 
-(defun force-cli-complete-objects (data)
+(defun force-cli-helm-complete (data)
   (interactive)
   (print (helm :sources (helm-build-sync-source "objects"
                           :candidates data
                           :fuzzy-match t)
                :buffer "* Force cli completions *")))
+
+(defun force-cli--parse-objectnames-from-response (response)
+  (mapcar (lambda (x) (print (plist-get x :Name))) response))
+
+(defun onSuccessCB (args)
+  )
+
+(defun force-cli-complete (params cb)
+  (request
+   (concat "localhost:8080/complete")
+   :params params
+
+   :parser
+   (lambda ()
+     (let ((json-object-type 'plist))
+       (json-read)))
+
+   :success
+   (function* (lambda (&key data &allow-other-keys)
+                (progn
+                  (setq results (append data '()))
+                  (cb results))))))
+
+;; completions
+(defun force-cli-complete-ui ()
+  (interactive)
+  (force-cli-complete '(("type" . "ui"))
+                      (lambda (results) (progn
+                                          (print "hi")
+                                          (insert (force-cli-helm-complete results))))))
+
+(defun force-cli-complete-vf ()
+  (interactive)
+  (let ((results (force-cli-complete '(("type" . "vf")))))
+    (insert (force-cli-helm-complete results))))
+
+(defun force-cli-complete-classes ()
+  (interactive)
+  (force-cli-complete '(("type" . "classes"))
+                      (insert (force-cli-helm-complete results))))
+
+(defun force-cli-complete-class-methods (className)
+  (interactive "sClassName: ")
+  (force-cli-complete `(("type" . "classes")
+                        ("className" . ,className))
+                      (insert (force-cli-helm-complete results))))
+
+(define-minor-mode force-mode
+  "A minor mode for interacting with the Force CLI, and other goodies."
+  :lighter " force-cli"
+  :keymap force-cli-keymap)
 
 (defvar force-cli-keymap nil "Keymap for Force-cli mode")
 (progn
@@ -85,29 +136,5 @@
 (add-to-list 'auto-mode-alist '("\\.cmp\\'" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.cmp\\'" . force-mode))
 
-(define-minor-mode force-mode
-  "A minor mode for interacting with the Force CLI, and other goodies."
-  :lighter " force-cli"
-  :keymap force-cli-keymap)
 
 (provide 'force-mode)
-
-(defun force-cli--parse-objectnames-from-response (response)
-  (mapcar (lambda (x) (print (plist-get x :Name))) response))
-
-(defun force-cli-get-ui ()
-  (interactive)
-  (request
-   "localhost:8080/complete/me"
-
-   :parser
-   (lambda ()
-     (let ((json-object-type 'plist))
-       (json-read)))
-
-   :success
-   (function* (lambda (&key data &allow-other-keys)
-                (progn
-                  (setq ui (append data '()))
-                  (insert (force-cli-complete-objects ui)))))))
-
