@@ -78,7 +78,7 @@
 (defun onSuccessCB (args)
   )
 
-(defun force-cli-complete (params cb)
+(defun force-cli-complete (params)
   (request
    (concat "localhost:8080/complete")
    :params params
@@ -92,42 +92,37 @@
    (function* (lambda (&key data &allow-other-keys)
                 (progn
                   (setq results (append data '()))
-                  (cb results))))))
+                  (insert (force-cli-helm-complete results)))))))
 
+;; This is messed up right now
 ;; completions
 (defun force-cli-complete-ui ()
   (interactive)
-  (force-cli-complete '(("type" . "ui"))
-                      (lambda (results) (progn
-                                          (print "hi")
-                                          (insert (force-cli-helm-complete results))))))
+  (let ((results (force-cli-complete '(("type" . "ui")))))))
 
 (defun force-cli-complete-vf ()
   (interactive)
-  (let ((results (force-cli-complete '(("type" . "vf")))))
-    (insert (force-cli-helm-complete results))))
+  (let ((results (force-cli-complete '(("type" . "vf")))))))
 
 (defun force-cli-complete-classes ()
   (interactive)
-  (force-cli-complete '(("type" . "classes"))
-                      (insert (force-cli-helm-complete results))))
+  (force-cli-complete '(("type" . "classes"))))
 
 (defun force-cli-complete-class-methods (className)
   (interactive "sClassName: ")
   (force-cli-complete `(("type" . "classes")
-                        ("className" . ,className))
-                      (insert (force-cli-helm-complete results))))
-
-(define-minor-mode force-mode
-  "A minor mode for interacting with the Force CLI, and other goodies."
-  :lighter " force-cli"
-  :keymap force-cli-keymap)
+                        ("className" . ,className))))
 
 (defvar force-cli-keymap nil "Keymap for Force-cli mode")
 (progn
   (setq force-cli-keymap (make-sparse-keymap))
   (define-key force-cli-keymap (kbd "C-c f p") 'force-cli-push-aura-file)
   (define-key force-cli-keymap (kbd "C-c f l") 'force-cli-login))
+
+(define-minor-mode force-mode
+  "A minor mode for interacting with the Force CLI, and other goodies."
+  :lighter " force-cli"
+  :keymap force-cli-keymap)
 
 ;; Add mode hooks
 (add-to-list 'auto-mode-alist '("\\.app\\'" . html-mode))
