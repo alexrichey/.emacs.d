@@ -4,6 +4,12 @@
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (require 'use-package)
+(use-package pug-mode
+  :ensure t)
+(use-package s
+  :ensure t)
+(use-package f
+  :ensure t)
 (use-package bm
   :ensure t)
 (use-package markdown-mode
@@ -238,7 +244,6 @@
 (key-chord-define-global "jd" 'helm-buffers-list)
 (key-chord-define-global ",," 'evil-mode)
 (key-chord-define-global "jk" 'evil-force-normal-state)
-(key-chord-define-global "qw" 'ace-jump-char-mode)
 
 (autoload
   'ace-jump-mode
@@ -331,6 +336,8 @@
 ;;                            (slime-js-minor-mode 1))))
 
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
+(global-set-key (kbd "C-M-i") 'complete-symbol)
+
 ;; (require 'slime)
 
 ;; make js2 the default mode for js
@@ -464,3 +471,14 @@
       (background dark))  (:foreground "White" :background "selectedKnobColor")))
   "Face used to highlight current line if bookmark is persistent."
   :group 'bm)
+
+
+
+
+                                        ; Org Mode
+(setq org-tag-alist '(
+                      (:startgroup . nil)
+                      ("@SSB" . ?s) ("Sightline" . ?l)
+                      (:endgroup . nil)
+                      ("Support" . ?a)
+                      ))
