@@ -229,7 +229,8 @@
 (global-set-key		(kbd "C-x C-f")	'helm-find-files)
 (global-set-key		(kbd "M-y")	'helm-show-kill-ring)
 (global-set-key		(kbd "M-x")	'helm-M-x)
-(global-set-key		(kbd "C-c SPC")	'ace-jump-word-mode)
+(global-set-key		(kbd "C-c j")	'ace-jump-word-mode)
+(global-set-key		(kbd "C-c i")	'helm-imenu)
 
 ;; multiple cursors
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -480,5 +481,6 @@
                       (:startgroup . nil)
                       ("@SSB" . ?s) ("Sightline" . ?l)
                       (:endgroup . nil)
-                      ("Support" . ?a)
+                      ("Support" . ?h)
+                      ("Admin" . ?a)
                       ))
