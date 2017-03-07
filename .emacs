@@ -4,6 +4,8 @@
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (require 'use-package)
+(use-package tern
+  :ensure t)
 (use-package pug-mode
   :ensure t)
 (use-package s
