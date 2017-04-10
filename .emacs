@@ -438,7 +438,7 @@
  '(neo-window-width 40)
  '(package-selected-packages
    (quote
-    (bm flyspell-correct-helm elpy pyfslakes pyflakes highlight-indentation pyde helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
+    (flycheck bm flyspell-correct-helm elpy pyfslakes pyflakes highlight-indentation pyde helm-cider ac-helm psvn ssh flymake-go go-snippets company-go scala-mode salesforce-utils requirejs pretty-lambdada password-vault eclim js2-highlight-vars http clojurescript-mode clj-mode ac-cider use-package helm-company company-jedi yafolding xah-elisp-mode web-mode web tagedit sublimity sublime-themes slime-js skewer-mode rvm rinari restclient olivetti nodejs-repl neotree mocha minimap markdown-mode magit-svn key-chord json-mode js3-mode js2-refactor js-comint jedi jade-mode icicles heroku-theme helm-rails helm-projectile helm-emmet go-mode foggy-night-theme expand-region exec-path-from-shell evil-paredit eruby-mode emacs-eclim elisp-slime-nav company coffee-mode cljr-helm auto-indent-mode ace-jump-mode ac-slime))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -453,7 +453,8 @@
                             (setq c-basic-offset 4)))
 
                                         ; The force is with you
-(load-file "~/.emacs.d/site-lisp/force-mode/force-mode.el")
+(load-file "~/dev/force-mode/force-mode.el")
+(load-file "~/dev/force-mode/flycheck-apex.el")
 (add-to-list 'auto-mode-alist '("\\.cmp\\'" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.app\\'" . html-mode))
 
@@ -482,10 +483,11 @@
                                         ; Org Mode
 (setq org-tag-alist '(
                       (:startgroup . nil)
-                      ("@SSB" . ?s) ("Sightline" . ?l)
+                      ("@SSB" . ?l) ("Sightline" . ?s)
                       (:endgroup . nil)
                       ("Support" . ?h)
                       ("Admin" . ?a)
+                      ("Sprint" . ?p)
                       ))
 
 
